@@ -116,6 +116,30 @@ body{font-family:"DM Sans",sans-serif;background:#fdfaf7;color:#1a2e1e;min-heigh
 
 <script>
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyDDsW54A4g-AxqknKnxvkU9LJOG69aZsa0CBYYC34BcCDagALj5KJ3HZKX0rgEAQQ9/exec';
+
+async function loadData(){
+  try{
+    const r=await fetch(SCRIPT_URL+"?t="+Date.now(),{redirect:"follow"});
+    const data=await r.json();
+    if(data&&typeof data==="object")allData=data;
+  }catch(e){console.error("Load failed",e)}
+}
+
+function scheduleSave(){
+  showStatus("Saving…","saving");
+  if(saveTimer)clearTimeout(saveTimer);
+  saveTimer=setTimeout(async()=>{
+    try{
+      const form=new FormData();
+      form.append("data",JSON.stringify(allData));
+      await fetch(SCRIPT_URL,{method:"POST",mode:"no-cors",body:form});
+      showStatus("✓ Saved","saved");
+    }catch(e){
+      showStatus("⚠ Save failed","error");
+      console.error(e);
+    }
+  },600);
+}
 const START = Date.UTC(2026,3,13);
 const WEDDING = Date.UTC(2026,5,27);
 const WDAYS = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
@@ -199,32 +223,7 @@ function showStatus(msg,type){
   if(type==="saved")setTimeout(()=>el.className="save-status",2000);
 }
 
-async function loadData(){
-  try{
-    const r=await fetch(SCRIPT_URL+"?t="+Date.now());
-    const data=await r.json();
-    if(data&&typeof data==="object")allData=data;
-  }catch(e){console.error("Load failed",e)}
-}
 
-function scheduleSave(){
-  showStatus("Saving…","saving");
-  if(saveTimer)clearTimeout(saveTimer);
-  saveTimer=setTimeout(async()=>{
-    try{
-      await fetch(SCRIPT_URL,{
-        method:"POST",
-        mode:"no-cors",
-        headers:{"Content-Type":"text/plain"},
-        body:JSON.stringify(allData)
-      });
-      showStatus("✓ Saved","saved");
-    }catch(e){
-      showStatus("⚠ Save failed","error");
-      console.error(e);
-    }
-  },600);
-}
 
 function toggle(day,id){
   const d=dd(day);
