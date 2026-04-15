@@ -115,8 +115,7 @@ body{font-family:"DM Sans",sans-serif;background:#fdfaf7;color:#1a2e1e;min-heigh
 <div class="main" id="mainContent"></div>
 
 <script>
-const NPOINT_ID = '16258b393a7ecf4e526a';
-const NPOINT_URL = 'https://api.npoint.io/'+NPOINT_ID;
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyDDsW54A4g-AxqknKnxvkU9LJOG69aZsa0CBYYC34BcCDagALj5KJ3HZKX0rgEAQQ9/exec';
 const START = Date.UTC(2026,3,13);
 const WEDDING = Date.UTC(2026,5,27);
 const WDAYS = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
@@ -202,7 +201,7 @@ function showStatus(msg,type){
 
 async function loadData(){
   try{
-    const r=await fetch(NPOINT_URL);
+    const r=await fetch(SCRIPT_URL+"?t="+Date.now());
     const data=await r.json();
     if(data&&typeof data==="object")allData=data;
   }catch(e){console.error("Load failed",e)}
@@ -213,15 +212,16 @@ function scheduleSave(){
   if(saveTimer)clearTimeout(saveTimer);
   saveTimer=setTimeout(async()=>{
     try{
-      const r=await fetch(NPOINT_URL,{
+      await fetch(SCRIPT_URL,{
         method:"POST",
-        headers:{"Content-Type":"application/json"},
+        mode:"no-cors",
+        headers:{"Content-Type":"text/plain"},
         body:JSON.stringify(allData)
       });
-      if(r.ok){showStatus("✓ Saved","saved");}
-      else throw new Error();
+      showStatus("✓ Saved","saved");
     }catch(e){
       showStatus("⚠ Save failed","error");
+      console.error(e);
     }
   },600);
 }
