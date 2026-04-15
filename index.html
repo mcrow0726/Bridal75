@@ -201,7 +201,7 @@ function showStatus(msg,type){
 
 async function loadData(){
   try{
-    const r=await fetch(SCRIPT_URL+"?t="+Date.now());
+    const r=await fetch(SCRIPT_URL+"?action=load&t="+Date.now());
     const data=await r.json();
     if(data&&typeof data==="object")allData=data;
   }catch(e){console.error("Load failed",e)}
@@ -212,18 +212,11 @@ function scheduleSave(){
   if(saveTimer)clearTimeout(saveTimer);
   saveTimer=setTimeout(async()=>{
     try{
-      const r=await fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify(allData)});
-      const res=await r.json();
-      if(res.status==="ok")showStatus("✓ Saved","saved");
-      else throw new Error();
+      const encoded=encodeURIComponent(JSON.stringify(allData));
+      await fetch(SCRIPT_URL+"?action=save&data="+encoded+"&t="+Date.now(),{method:"GET",mode:"no-cors"});
+      showStatus("✓ Saved","saved");
     }catch(e){
-      showStatus("⚠ Retrying…","error");
-      setTimeout(async()=>{
-        try{
-          await fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify(allData)});
-          showStatus("✓ Saved","saved");
-        }catch{showStatus("⚠ Save failed","error")}
-      },3000);
+      showStatus("⚠ Save failed","error");
     }
   },600);
 }
