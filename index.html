@@ -1,1 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Bridal 75 · Mallory</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"DM Sans",sans-serif;background:#fdfaf7;color:#1a2e1e;min-height:100vh}
+.hero{background:linear-gradient(160deg,#f7e0e8,#fce8ee,#fdf4f7);padding:40px 24px 32px;text-align:center;position:relative;overflow:hidden}
+.hero-overlay{position:absolute;inset:0;background:radial-gradient(ellipse at 65% 0%,rgba(138,181,142,0.2),transparent 55%),radial-gradient(ellipse at 20% 100%,rgba(232,160,180,0.25),transparent 50%);pointer-events:none}
+.hero-inner{position:relative;z-index:1}
+.eyebrow{font-size:10px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:#4a7a4e;margin-bottom:10px}
+.title{font-family:"Cormorant Garamond",serif;font-size:48px;font-weight:300;color:#c4637e;line-height:1;margin-bottom:4px}
+.title em{font-style:italic;color:#4a7a4e}
+.subtitle{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:15px;color:rgba(42,31,26,0.5);margin-bottom:24px}
+.ring{display:inline-flex;flex-direction:column;align-items:center;background:rgba(232,160,180,0.2);border:1px solid rgba(232,160,180,0.5);border-radius:50%;width:100px;height:100px;justify-content:center;margin-bottom:6px}
+.ring-num{font-family:"Cormorant Garamond",serif;font-size:40px;font-weight:300;color:#c4637e;line-height:1}
+.ring-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#4a7a4e}
+.wedding-date{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(42,31,26,0.35);margin-top:6px}
+.phase-banner{background:#8ab58e;padding:9px 24px;text-align:center}
+.phase-banner span{font-size:10px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:#fff}
+.progress-section{padding:18px 20px 12px;background:#faf6f8;border-bottom:1px solid #b8d4bc}
+.progress-row{display:flex;justify-content:space-between;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#6b7d6b;margin-bottom:7px}
+.progress-bg{height:4px;background:rgba(138,181,142,0.2);border-radius:2px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,#e8a0b4,#8ab58e);border-radius:2px;transition:width 0.8s ease}
+.day-nav{padding:12px 20px;background:#fdfaf7;border-bottom:1px solid #b8d4bc}
+.day-nav-title{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#6b7d6b;margin-bottom:8px}
+.day-scroll{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.day-scroll::-webkit-scrollbar{display:none}
+.day-pill{flex-shrink:0;padding:5px 11px;border-radius:20px;border:1px solid #b8d4bc;background:transparent;font-family:"DM Sans",sans-serif;font-size:11px;color:#6b7d6b;cursor:pointer;white-space:nowrap}
+.day-pill.active{background:#8ab58e;border-color:#8ab58e;color:#fff;font-weight:500}
+.day-pill.done{background:#fce8ee;border-color:#e8a0b4;color:#c4637e}
+.main{padding:20px;max-width:480px;margin:0 auto}
+.date-header{display:flex;align-items:baseline;gap:12px;margin-bottom:18px}
+.date-num{font-family:"Cormorant Garamond",serif;font-size:44px;font-weight:300;color:#e8a0b4;line-height:1}
+.date-info{flex:1}
+.date-weekday{font-size:14px;font-weight:500;color:#1a2e1e}
+.date-full{font-size:11px;color:#6b7d6b;letter-spacing:1px}
+.day-score{text-align:right}
+.score-num{font-family:"Cormorant Garamond",serif;font-size:30px;color:#8ab58e;line-height:1}
+.score-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#6b7d6b}
+.phase-card{margin-bottom:18px;padding:16px;background:linear-gradient(135deg,#1a2e1e,#2f5234);border-radius:12px}
+.phase-card-title{font-family:"Cormorant Garamond",serif;font-size:19px;font-weight:300;margin-bottom:10px;color:#e8a0b4}
+.phase-rule{display:flex;gap:10px;margin-bottom:7px;font-size:12px;line-height:1.4;color:rgba(253,250,247,0.82)}
+.phase-dot{width:4px;height:4px;border-radius:50%;background:#8ab58e;flex-shrink:0;margin-top:6px}
+.week-label{font-size:10px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:#6b7d6b;margin-bottom:9px}
+.weekly-bar{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:18px}
+.weekly-day{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer}
+.wday-label{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#6b7d6b}
+.wday-dot{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;border:1.5px solid #b8d4bc;color:#6b7d6b}
+.wday-dot.complete{background:#8ab58e;border-color:#8ab58e;color:#fff}
+.wday-dot.today{border-color:#e8a0b4;border-width:2px;color:#e8a0b4}
+.pillar{margin-bottom:14px;border:1px solid #b8d4bc;border-radius:12px;overflow:hidden}
+.pillar-head{padding:11px 15px;display:flex;align-items:center;gap:10px}
+.pillar-head.move{background:linear-gradient(135deg,#fce8ee,#fdf4f6)}
+.pillar-head.skin{background:linear-gradient(135deg,#eef4ef,#f5faf5)}
+.pillar-head.nourish{background:linear-gradient(135deg,#fce8ee,#fdf4f6)}
+.pillar-head.mind{background:linear-gradient(135deg,#eef4ef,#fce8ee)}
+.pillar-head.bonus{background:linear-gradient(135deg,#eef4ef,#f5faf5)}
+.pillar-icon{font-size:17px}
+.pillar-title{font-family:"Cormorant Garamond",serif;font-size:17px;font-weight:500;flex:1;color:#1a2e1e}
+.pillar-count{font-size:11px;color:#6b7d6b;font-weight:500}
+.pillar-body{padding:4px 15px 11px}
+.habit-row{display:flex;align-items:center;gap:11px;padding:9px 0;border-bottom:1px solid rgba(138,181,142,0.15)}
+.habit-row:last-child{border-bottom:none}
+.habit-check{width:22px;height:22px;border-radius:50%;border:1.5px solid #b8d4bc;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.15s;-webkit-tap-highlight-color:transparent}
+.habit-check.checked{background:#8ab58e;border-color:#8ab58e}
+.habit-check.checked::after{content:"✓";color:white;font-size:12px}
+.habit-info{flex:1}
+.habit-name{font-size:13px;font-weight:500;color:#1a2e1e;line-height:1.3}
+.habit-name.done{text-decoration:line-through;opacity:0.45}
+.habit-sub{font-size:11px;color:#6b7d6b;margin-top:1px}
+.tag{font-size:9px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;padding:2px 7px;border-radius:10px;flex-shrink:0}
+.tag.strong{background:#b8d4bc;color:#4a7a4e}
+.tag.sage{background:#eef4ef;color:#4a7a4e}
+.tag.pink{background:#fce8ee;color:#c4637e}
+.note-box{margin-top:14px;padding:11px 15px;background:#faf6f8;border-radius:10px;border:1px solid #b8d4bc}
+.note-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#6b7d6b;margin-bottom:5px}
+.note-input{width:100%;border:none;background:transparent;font-family:"Cormorant Garamond",serif;font-size:15px;color:#1a2e1e;resize:none;outline:none;min-height:48px;line-height:1.5}
+.save-status{padding:8px 20px;text-align:center;display:none}
+.save-status.show{display:block}
+.save-status.saving{background:#1a2e1e}
+.save-status.saved{background:#1a2e1e}
+.save-status.error{background:#7a3348}
+.save-status span{font-size:11px;letter-spacing:2px;text-transform:uppercase}
+.footer-note{text-align:center;margin-top:16px;margin-bottom:24px;font-size:11px;color:#6b7d6b;line-height:1.6}
+</style>
+</head>
+<body>
+<div id="saveStatus" class="save-status"><span id="saveText"></span></div>
+<div class="hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-inner">
+    <div class="eyebrow">The Final Countdown</div>
+    <div class="title"><em>Bridal</em> 75</div>
+    <div class="subtitle">by Mallory</div>
+    <div class="ring">
+      <div class="ring-num" id="daysLeft">75</div>
+      <div class="ring-label">days to go</div>
+    </div>
+    <div class="wedding-date">June 27, 2026 · The View at Mount Adams</div>
+  </div>
+</div>
+<div class="phase-banner"><span id="phaseName">Phase 1 of 3 · Foundation</span></div>
+<div class="progress-section">
+  <div class="progress-row"><span>Day <span id="dayLabel">1</span> of 75</span><span id="pctLabel">1%</span></div>
+  <div class="progress-bg"><div class="progress-fill" id="progressFill" style="width:1%"></div></div>
+</div>
+<div class="day-nav">
+  <div class="day-nav-title">Jump to day</div>
+  <div class="day-scroll" id="dayScroll"></div>
+</div>
+<div class="main" id="mainContent"></div>
 
+<script>
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyDDsW54A4g-AxqknKnxvkU9LJOG69aZsa0CBYYC34BcCDagALj5KJ3HZKX0rgEAQQ9/exec';
+const START = Date.UTC(2026,3,13);
+const WEDDING = Date.UTC(2026,5,27);
+const WDAYS = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+function todayUTC(){const n=new Date();return Date.UTC(n.getFullYear(),n.getMonth(),n.getDate())}
+function d2ms(n){return START+(n-1)*86400000}
+function ms2d(ms){return Math.round((ms-START)/86400000)+1}
+function dow(ms){const d=new Date(ms).getUTCDay();return d===0?6:d-1}
+function dInfo(n){const ms=d2ms(n),d=new Date(ms);return{w:WDAYS[dow(ms)],m:MONTHS[d.getUTCMonth()],dt:d.getUTCDate(),mfi:dow(ms)}}
+function dtw(){return Math.max(0,Math.round((WEDDING-todayUTC())/86400000))}
+function phase(n){return n<=25?1:n<=50?2:3}
+
+const HABITS={
+  move:{label:"Move",icon:"🏃\u200d♀️",items:[
+    {id:"workout",name:"30+ min continuous exercise",sub:"Class, walk, or home — tracked on watch",tc:"strong"},
+    {id:"steps",name:"5000+ steps",sub:"Track daily — keep moving",tc:"strong"}
+  ]},
+  skin:{label:"Skin & Beauty",icon:"✨",items:[
+    {id:"am",name:"AM skincare",sub:"Cleanse + hydrate — no exceptions",tc:"strong"},
+    {id:"pm",name:"PM skincare",sub:"Full routine — no exceptions",tc:"strong"},
+    {id:"sun",name:"Reapply sunscreen",sub:"Midday reapplication — non-negotiable",tc:"strong"},
+    {id:"lb",name:"Lash + brow serum",sub:"Once daily minimum",tc:"strong"}
+  ]},
+  nourish:{label:"Nourish",icon:"💊",items:[
+    {id:"meds",name:"Medications",sub:"All prescriptions — no exceptions",tc:"strong"},
+    {id:"supps",name:"Supplements",sub:"All supplements — stay consistent",tc:"strong"},
+    {id:"creat",name:"Creatine",sub:"Every day — muscle support",tc:"strong"},
+    {id:"elec",name:"Electrolytes",sub:"Especially before hard workouts",tc:"strong"},
+    {id:"prot",name:"Prioritize protein",sub:"Hit protein goals throughout day",tc:"strong"},
+    {id:"water",name:"Hydrate",sub:"Track water throughout day",tc:"strong"},
+    {id:"choc",name:"Limit to 2 chocolate squares",sub:"Down from 4 — reassess at Day 25",tc:"strong"}
+  ]},
+  mind:{label:"Treatments & Body",icon:"🌸",items:[
+    {id:"lymph",name:"Lymphatic massage",sub:"Daily drainage — face, neck, body",tc:"strong"},
+    {id:"meditate",name:"5 mins meditation/manifestation",sub:"Set intentions — bridal mindset",tc:"strong"},
+    {id:"sleep",name:"Prioritize sleep",sub:"Consistent bedtime — track quality",tc:"strong"}
+  ]}
+};
+
+const BONUS=[
+  {id:"bonus_workout2",name:"Second workout",sub:"Double day — extra credit",tc:"sage"},
+  {id:"bonus_gabby",name:"Gabby George Bridal Arms",sub:"TikTok bridal arm series",tc:"sage"},
+  {id:"bonus_vplate",name:"Vibration plate",sub:"10+ min lymphatic + muscle activation",tc:"sage"},
+  {id:"bonus_red",name:"Red light mask",sub:"Morning session",tc:"sage"},
+  {id:"bonus_ret",name:"Exfoliation or retinol",sub:"When cleared by laser schedule",tc:"sage"},
+  {id:"bonus_kp",name:"12% lactic acid moisturizer",sub:"KP body treatment",tc:"sage"},
+  {id:"bonus_hgrow",name:"Hair growth serum",sub:"Apply per routine",tc:"sage"},
+  {id:"bonus_hoil",name:"Hair oil treatment",sub:"Nourish + strengthen",tc:"sage"},
+  {id:"bonus_facial",name:"Facial or skin treatment",sub:"Check off each time you get one",tc:"sage"}
+];
+
+const APPTS={
+  10:{id:"bbl2",name:"BBL/Moxi Session 2",sub:"Today is your appointment — adjust skincare actives",tc:"strong"},
+  25:{id:"chk1",name:"25-Day Check-In",sub:"Reassess + intensify for Phase 2",tc:"sage"},
+  38:{id:"bbl3",name:"BBL/Moxi Session 3",sub:"Today is your appointment — adjust skincare actives",tc:"strong"},
+  50:{id:"chk2",name:"50-Day Check-In",sub:"Final push — Phase 3 begins",tc:"sage"},
+  52:{id:"botox",name:"Final Botox session",sub:"Today is your appointment",tc:"strong"}
+};
+
+const P1=[
+  "Build consistent daily habits across movement, skin, nourishment and body",
+  "Prioritize sleep, hydration and protein every day",
+  "Stay ahead of laser and treatment schedule — adjust actives accordingly",
+  "Consistency over perfection — aim for progress not a perfect score",
+  "Check in at Day 25 to reassess, intensify and promote bonus habits"
+];
+
+let currentDay=1, allData={}, saveTimer=null;
+
+function dd(n){return allData[n]||(allData[n]={checks:{},note:""}),allData[n]}
+function checked(n){return Object.values(dd(n).checks).filter(Boolean).length}
+function baseTotal(){return Object.values(HABITS).reduce((s,p)=>s+p.items.length,0)}
+function totalFor(n){return baseTotal()+(APPTS[n]?1:0)}
+
+function showStatus(msg,type){
+  const el=document.getElementById("saveStatus"),tx=document.getElementById("saveText");
+  el.className="save-status show "+type;
+  tx.style.color=type==="saved"?"#8ab58e":type==="error"?"#fce8ee":"#e8a0b4";
+  tx.textContent=msg;
+  if(type==="saved")setTimeout(()=>el.className="save-status",2000);
+}
+
+async function loadData(){
+  try{
+    const r=await fetch(SCRIPT_URL+"?t="+Date.now());
+    const data=await r.json();
+    if(data&&typeof data==="object")allData=data;
+  }catch(e){console.error("Load failed",e)}
+}
+
+function scheduleSave(){
+  showStatus("Saving…","saving");
+  if(saveTimer)clearTimeout(saveTimer);
+  saveTimer=setTimeout(async()=>{
+    try{
+      const r=await fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify(allData)});
+      const res=await r.json();
+      if(res.status==="ok")showStatus("✓ Saved","saved");
+      else throw new Error();
+    }catch(e){
+      showStatus("⚠ Retrying…","error");
+      setTimeout(async()=>{
+        try{
+          await fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify(allData)});
+          showStatus("✓ Saved","saved");
+        }catch{showStatus("⚠ Save failed","error")}
+      },3000);
+    }
+  },600);
+}
+
+function toggle(day,id){
+  const d=dd(day);
+  d.checks[id]=!d.checks[id];
+  renderMain();renderNav();scheduleSave();
+}
+
+function renderNav(){
+  const c=document.getElementById("dayScroll");
+  c.innerHTML="";
+  for(let i=1;i<=75;i++){
+    const {w,m,dt}=dInfo(i);
+    const b=document.createElement("button");
+    const isA=i===currentDay,isDone=checked(i)>0&&!isA;
+    b.className="day-pill"+(isA?" active":isDone?" done":"");
+    b.textContent=w+" "+m+" "+dt;
+    b.onclick=()=>{currentDay=i;renderAll()};
+    c.appendChild(b);
+  }
+  const a=c.querySelector(".active");
+  if(a)a.scrollIntoView({inline:"center",behavior:"smooth"});
+}
+
+function renderHero(){
+  document.getElementById("daysLeft").textContent=dtw();
+  const ph=phase(currentDay),names=["Foundation","Momentum","Final Polish"];
+  document.getElementById("phaseName").textContent="Phase "+ph+" of 3 · Days "+((ph-1)*25+1)+"–"+(ph*25)+" · "+names[ph-1];
+  document.getElementById("dayLabel").textContent=currentDay;
+  const pct=Math.max(1,Math.round(currentDay/75*100));
+  document.getElementById("pctLabel").textContent=pct+"%";
+  document.getElementById("progressFill").style.width=pct+"%";
+}
+
+function renderMain(){
+  const {w,m,dt,mfi}=dInfo(currentDay);
+  const d=dd(currentDay),ch=checked(currentDay),tot=totalFor(currentDay);
+  const bc=BONUS.filter(h=>d.checks[h.id]).length;
+  const ph=phase(currentDay);
+  const monUTC=d2ms(currentDay)-mfi*86400000;
+  let html="";
+
+  html+=`<div class="date-header">
+    <div class="date-num">${currentDay}</div>
+    <div class="date-info">
+      <div class="date-weekday">${w}, ${m} ${dt}</div>
+      <div class="date-full">Phase ${ph} · ${dtw()} days to wedding</div>
+    </div>
+    <div class="day-score">
+      <div class="score-num">${ch}/${tot}${bc>0?"<span style=\"font-size:16px;color:#e8a0b4\"> +"+bc+"</span>":""}</div>
+      <div class="score-label">${bc>0?"done + bonus":"completed"}</div>
+    </div>
+  </div>`;
+
+  if(currentDay===1){
+    html+=`<div class="phase-card"><div class="phase-card-title">Phase 1 · Days 1–25 · Foundation</div>`;
+    P1.forEach(r=>html+=`<div class="phase-rule"><div class="phase-dot"></div>${r}</div>`);
+    html+="</div>";
+  }
+
+  html+=`<div class="week-label">This Week</div><div class="weekly-bar">`;
+  for(let i=0;i<7;i++){
+    const ms=monUTC+i*86400000,wdn=ms2d(ms),valid=wdn>=1&&wdn<=75;
+    const isCur=wdn===currentDay,hasW=valid&&!!dd(wdn).checks["workout"];
+    html+=`<div class="weekly-day" style="opacity:${valid?1:0.25}" onclick="${valid?"currentDay="+wdn+";renderAll()":""}">
+      <div class="wday-label">${WDAYS[i]}</div>
+      <div class="wday-dot${hasW?" complete":isCur?" today":""}">${hasW?"✓":isCur?"·":""}</div>
+    </div>`;
+  }
+  html+="</div>";
+
+  Object.entries(HABITS).forEach(([key,pillar])=>{
+    const extra=key==="mind"&&APPTS[currentDay]?[APPTS[currentDay]]:[];
+    const items=[...pillar.items,...extra];
+    const pc=items.filter(h=>d.checks[h.id]).length;
+    html+=`<div class="pillar"><div class="pillar-head ${key}">
+      <span class="pillar-icon">${pillar.icon}</span>
+      <span class="pillar-title">${pillar.label}</span>
+      <span class="pillar-count">${pc}/${items.length}</span>
+    </div><div class="pillar-body">`;
+    items.forEach((h,idx)=>{
+      const ck=!!d.checks[h.id];
+      html+=`<div class="habit-row">
+        <div class="habit-check${ck?" checked":""}" onclick="toggle(${currentDay},'${h.id}')"></div>
+        <div class="habit-info">
+          <div class="habit-name${ck?" done":""}">${h.name}</div>
+          <div class="habit-sub">${h.sub}</div>
+        </div>
+        <div class="tag ${h.tc}">daily</div>
+      </div>`;
+    });
+    html+="</div></div>";
+  });
+
+  const bpc=BONUS.filter(h=>d.checks[h.id]).length;
+  html+=`<div class="pillar"><div class="pillar-head bonus">
+    <span class="pillar-icon">⭐</span>
+    <span class="pillar-title">Bonus</span>
+    <span class="pillar-count">${bpc>0?"+"+bpc+" today":"extra credit"}</span>
+  </div><div class="pillar-body">`;
+  BONUS.forEach(h=>{
+    const ck=!!d.checks[h.id];
+    html+=`<div class="habit-row">
+      <div class="habit-check${ck?" checked":""}" onclick="toggle(${currentDay},'${h.id}')"></div>
+      <div class="habit-info">
+        <div class="habit-name${ck?" done":""}">${h.name}</div>
+        <div class="habit-sub">${h.sub}</div>
+      </div>
+      <div class="tag sage">bonus</div>
+    </div>`;
+  });
+  html+="</div></div>";
+
+  html+=`<div class="note-box">
+    <div class="note-label">Daily note</div>
+    <textarea class="note-input" id="noteInput" placeholder="How did today feel? Wins, adjustments, observations…" rows="3">${d.note||""}</textarea>
+  </div>`;
+  html+=`<div class="footer-note">Saves automatically to your Google Sheet after every tap 🌸</div>`;
+
+  document.getElementById("mainContent").innerHTML=html;
+  document.getElementById("noteInput").addEventListener("input",e=>{
+    dd(currentDay).note=e.target.value;scheduleSave();
+  });
+}
+
+function renderAll(){renderHero();renderNav();renderMain()}
+
+async function init(){
+  const n=ms2d(todayUTC());
+  currentDay=Math.max(1,Math.min(75,n));
+  await loadData();
+  renderAll();
+}
+init();
+</script>
+</body>
+</html>
