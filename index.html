@@ -234,9 +234,12 @@ function showStatus(msg,type){
 
 
 function toggle(day,id){
+  const scrollY=window.scrollY;
   const d=dd(day);
   d.checks[id]=!d.checks[id];
-  renderMain();renderNav();scheduleSave();
+  renderMain();renderNav();
+  window.scrollTo(0,scrollY);
+  scheduleSave();
 }
 
 function renderNav(){
